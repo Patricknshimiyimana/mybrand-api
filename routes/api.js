@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const multer = require('multer');
 const Article = require('../models/article');
-const upload = require('../upload/articles image');
+const upload = multer({dest: '../upload'});
 
 // Get a list of articles from the db
 router.get('/articles', function(req, res) {
@@ -21,8 +22,8 @@ router.post('/articles', upload.single('image'), function(req, res) {
     article.save().then(function(article){
         res.send(article)
     }).catch((err) => {
-        console.log(req.file.path);
-        res.send(err.message)
+        console.log(err.message);
+        res.status(422).send(err.message)
     });
     
     
@@ -35,7 +36,9 @@ router.put('/articles/:id', function(req, res) {
 
 // delete article from the db
 router.delete('/articles/:id', function(req, res) {
-    res.send({type: 'DELETE'});
+    Article.findByIdAndRemove({_id: req.params.id}).then(function(article) {
+        res.send(article);
+    });
 });
 
 module.exports = router;
