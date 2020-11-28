@@ -37,7 +37,10 @@ router.put('/articles/:id', function(req, res) {
 // delete article from the db
 router.delete('/articles/:id', function(req, res) {
     Article.findByIdAndRemove({_id: req.params.id}).then(function(article) {
-        res.send(article)
+        // Article.findOne({_id: req.params.id}).then(function(article) {
+        //   res.send(article);
+        // })
+        res.send(article + 'this post has been deleted')
     });
 });
 
