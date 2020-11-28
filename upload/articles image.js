@@ -26,3 +26,5 @@ const upload = multer({
 });
 
 module.exports = upload;
+
+//to init update post

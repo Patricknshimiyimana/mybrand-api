@@ -58,3 +58,5 @@ router.delete('/articles/:id', function(req, res) {
 });
 
 module.exports = router;
+
+//to init update post

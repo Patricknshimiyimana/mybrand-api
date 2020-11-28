@@ -20,6 +20,8 @@ app.listen(process.env.port || 3000, () => {
 })).catch((err) => console.log(err));
 mongoose.Promise = global.Promise;
 
+//to init update post
+
 
 
 
