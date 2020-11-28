@@ -30,4 +30,5 @@ const articleSchema = new Schema({
 const Article = mongoose.model('article', articleSchema);
 module.exports = Article;
 
+// no comment this is to help push to github
  
