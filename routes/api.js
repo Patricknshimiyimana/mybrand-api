@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
 const Article = require('../models/article');
+const Queries = require('../models/queries');
 const upload = multer({dest: '../upload'});
 
 // Get a list of articles from the db
@@ -56,5 +57,38 @@ router.delete('/articles/:id', function(req, res) {
         res.send(article + 'this post has been deleted')
     });
 });
+
+// get user queries from the database
+router.get('/queries', function(req, res) {
+    Queries.find({}).then(function(queries) {
+        res.send(queries)
+    })
+});
+
+// add queries to the db
+router.post('/queries', function(req, res) {
+    let queries = new Queries({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        email: req.body.email,
+        message: req.body.message
+    });
+    queries.save(queries).then(function(queries){
+        res.send(queries + 'message sent')
+    }).catch((err) => {
+        console.log(err.message);
+        res.status(422).send(err.message)
+    });
+    
+    
+});
+
+// delete queries from the db
+router.delete('/queries/:id', function(req, res) {
+    Queries.findByIdAndRemove({_id: req.params.id}).then(function(queries) {
+        res.send(queries + 'this message has been deleted')
+    });
+});
+
 
 module.exports = router;
