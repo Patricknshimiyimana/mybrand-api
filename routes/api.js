@@ -67,14 +67,15 @@ router.get('/queries', function(req, res) {
 
 // add queries to the db
 router.post('/queries', function(req, res) {
-    let queries = new Queries({
+
+    let query = new Queries({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         email: req.body.email,
         message: req.body.message
     });
-    queries.save(queries).then(function(queries){
-        res.send(queries + 'message sent')
+    query.save().then(function(query){
+        res.send(query + 'message sent')
     }).catch((err) => {
         console.log(err.message);
         res.status(422).send(err.message)
@@ -92,3 +93,6 @@ router.delete('/queries/:id', function(req, res) {
 
 
 module.exports = router;
+
+
+
