@@ -13,6 +13,20 @@ router.get('/articles', function(req, res) {
     })
 });
 
+// Get a single post
+
+router.get('/articles/:id', function(req, res) {
+    Article.findOne({_id: req.params.id}).then(function(article){
+        if (article) {
+            res.send(article)
+        } else {
+           res.send('Post Not Found') 
+        }
+    }).catch((err) => {
+        console.log(err.message)
+    })
+})
+
 // add a new article to the db
 router.post('/articles', upload.single('image'), function(req, res) {
     let article = new Article({
