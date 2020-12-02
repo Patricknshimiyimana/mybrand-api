@@ -5,6 +5,8 @@ const multer = require('multer');
 const Article = require('../models/article');
 const Queries = require('../models/queries');
 const upload = multer({dest: '../upload'});
+const {signup, login_get, login_post, logout}  = require('../controllers/auth controller');
+const auth = require('../auth confings/auth config');
 
 // Get a list of articles from the db
 router.get('/articles', function(req, res) {
@@ -85,11 +87,32 @@ router.post('/queries', function(req, res) {
 });
 
 // delete queries from the db
-router.delete('/queries/:id', function(req, res) {
+router.delete('/queries/:id', auth, function(req, res) {
     Queries.findByIdAndRemove({_id: req.params.id}).then(function(queries) {
         res.send(queries + 'this message has been deleted')
     });
 });
+
+
+
+// user authentication
+
+router.post('/signup', signup);
+
+
+router.get('/login', login_get);
+router.post('/login', login_post);
+
+
+
+// logout a user
+router.get('/logout', logout);
+
+
+
+
+
+
 
 
 module.exports = router;

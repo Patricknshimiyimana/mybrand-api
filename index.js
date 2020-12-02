@@ -3,9 +3,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
+const cookieParser = require('cookie-parser');
+
 // setup express app
 const app = express();
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 // initialize routes
