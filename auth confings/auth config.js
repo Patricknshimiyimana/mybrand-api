@@ -7,15 +7,19 @@ const auth = function(req, res, next) {
     if (token) {
         jwt.verify(token, 'ttest123', (err, decodedToken) => {
             if (err) {
-                res.redirect('/login');
                 console.log(err.message);
+                res.send('login first')
+                // res.redirect('/login')
             } else {
+                console.log(decodedToken);
                 next()
             }
         })
     } else {
-        res.redirect('/login');
+        res.send('login first')
+        // res.redirect('/login');
+        
     }
 }
 
-module.exports = auth;
+module.exports = { auth };

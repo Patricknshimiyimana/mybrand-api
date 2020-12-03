@@ -6,7 +6,7 @@ const Article = require('../models/article');
 const Queries = require('../models/queries');
 const upload = multer({dest: '../upload'});
 const {signup, login_get, login_post, logout}  = require('../controllers/auth controller');
-const auth = require('../auth confings/auth config');
+const { auth } = require('../auth confings/auth config');
 
 // Get a list of articles from the db
 router.get('/articles', function(req, res) {
@@ -16,7 +16,7 @@ router.get('/articles', function(req, res) {
 });
 
 // add a new article to the db
-router.post('/articles', upload.single('image'), function(req, res) {
+router.post('/articles', upload.single('image'), auth, function(req, res) {
     let article = new Article({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
@@ -35,7 +35,7 @@ router.post('/articles', upload.single('image'), function(req, res) {
 });
 
 // update article in the db
-router.put('/articles/:id', upload.single('image'), function(req, res) {
+router.put('/articles/:id', upload.single('image'), auth, function(req, res) {
     Article.findByIdAndUpdate({_id: req.params.id}, {
         title: req.body.title,
         summary: req.body.summary,
@@ -51,7 +51,7 @@ router.put('/articles/:id', upload.single('image'), function(req, res) {
 });
 
 // delete article from the db
-router.delete('/articles/:id', function(req, res) {
+router.delete('/articles/:id', auth, function(req, res) {
     Article.findByIdAndRemove({_id: req.params.id}).then(function(article) {
         // Article.findOne({_id: req.params.id}).then(function(article) {
         //   res.send(article);
@@ -61,7 +61,7 @@ router.delete('/articles/:id', function(req, res) {
 });
 
 // get user queries from the database
-router.get('/queries', function(req, res) {
+router.get('/queries', auth, function(req, res) {
     Queries.find({}).then(function(queries) {
         res.send(queries)
     })
@@ -107,6 +107,7 @@ router.post('/login', login_post);
 
 // logout a user
 router.get('/logout', logout);
+
 
 
 
