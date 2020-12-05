@@ -37,7 +37,7 @@ router.post('/articles', upload.single('image'), function(req, res) {
         image: req.file.path
     });
     article.save().then(function(article){
-        res.send(article + 'post created')
+        res.status(201).send(article + 'post created')
     }).catch((err) => {
         console.log(err.message);
         res.status(422).send(err.message)
