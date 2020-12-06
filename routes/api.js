@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const Article = require('../models/article');
 const Queries = require('../models/queries');
+const Comment = require('../models/comment');
 const upload = multer({dest: '../upload'});
 
 // Get a list of articles from the db
@@ -105,6 +106,48 @@ router.delete('/queries/:id', function(req, res) {
     });
 });
 
+
+// comments route
+const getComments = require('../controllers/comments controller');
+// let comment = new Comment;
+
+router.post('/:id/comment', function(req, res) {
+    let comment = new Comment({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        comment: req.body.comment
+    });
+    comment.save().then(function(comment){
+        res.status(201).send(comment + 'comment posted')
+    }).catch((err) => {
+        console.log(err.message);
+        res.status(422).send(err.message)
+    });
+    
+    
+});
+// comment.save().then(function(comment){
+//     res.send(comment + 'comment added')
+// }).catch((err) => {
+//     console.log(err.message);
+//     // res.status(422).send(err.message)
+// });
+router.get('/:id/comment', getComments);
+// router.delete('/:id/comment/:id', auth, deleteComment)
+
+// function postComment(req, res) {
+//     let comment = new Comment({
+//         _id: new mongoose.Types.ObjectId(),
+//         name: req.body.name,
+//         comment: req.body.comment
+//     })
+// };
+
+// function getComment(req, res) {
+//     Comment.find({}).then(function(comment) {
+//         res.send(comment)
+//     })
+// };
 
 module.exports = router;
 
