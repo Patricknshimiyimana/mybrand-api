@@ -22,7 +22,7 @@ const articleSchema = new Schema({
     },
     image:{
         type: String,
-        required: true
+        // required: true
     }
     
 }, { timestamps: true });

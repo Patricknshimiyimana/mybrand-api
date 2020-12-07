@@ -34,5 +34,11 @@ describe('Should post article', async() => {
         const res = await request(app).get('/api/articles');
         expect(res.status).to.be.equal(200);
     })
+
+    it('should get single post', async() => {
+        const article = await Article.create(testPosts);
+        const res = await request(app).get('/api/articles/'+article._id);
+        expect(res.status).to.be.equal(200);
+    } )
 })
 
