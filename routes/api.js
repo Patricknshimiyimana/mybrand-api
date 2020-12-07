@@ -8,9 +8,15 @@ const upload = multer({dest: '../upload'});
 
 // Get a list of articles from the db
 router.get('/articles', function(req, res) {
-    Article.find({}).then(function(articles) {
-        res.send(articles)
-    })
+    Article.find({}).then(function(articles){
+        if(articles){
+        res.status(200).send(articles)
+        }else{
+            res.status(404).json('Articles not found');
+        }
+    }).catch((error)=>{
+        res.status(500).send(err.message)
+    });
 });
 
 // Get a single post
@@ -75,7 +81,7 @@ router.delete('/articles/:id', function(req, res) {
 // get user queries from the database
 router.get('/queries', function(req, res) {
     Queries.find({}).then(function(queries) {
-        res.send(queries)
+        res.status(200).send(queries)
     })
 });
 
