@@ -12,7 +12,7 @@ const {expect} = chai;
 chai.use(chaiHttp);
 
 
-describe('testing article', async() => {
+describe('Should post article', async() => {
     it( 'post article', async() => {
          const res = await request(app).post('/api/articles')
         .field('title', 'test one title')
@@ -22,4 +22,16 @@ describe('testing article', async() => {
 
         expect(res.status).to.be.equal(201);
     })
+
+    // it('Should Get all articles from database', async () => {
+    //     const res = await request(app).get('/articles');
+    //     expect(res.status).to.be.equal(200);
+    //     expect(res.body).to.have.property('message', 'Successfully getting articles');
+    //     expect(res.body).to.have.property('success', true);
+    //     expect(res.body).to.be.a('object');
+    //     expect(res.body.data).to.be.a('object');
+    //     expect(res.body.data).to.have.property('articles');
+    //     expect(res.body.data.articles).to.be.a('array');
+    // })
 })
+
