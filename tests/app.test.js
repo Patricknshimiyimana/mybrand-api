@@ -17,8 +17,20 @@ const { it, describe, beforeEach, afterEach } = mocha;
 const {expect} = chai;
 chai.use(chaiHttp);
 
+const cookieValue = 'jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmY2EzOWIzNzNiN2E1MDAxNzYwNDMzZSIsImlhdCI6MTYwNzI4MDUzMywiZXhwIjoxNjEwODgwNTMzfQ.0hYGRpVq4ypub1M1B8S9YWfiP9P6YXxeNlrkemUi2vk';
+
 
 describe('Should post article', async() => {
+
+    
+        beforeEach(async () => {
+          
+            await Article.deleteMany({});
+        });
+        afterEach(async () => {
+            await Article.deleteMany({});
+        });
+
     it( 'post article', async() => {
          const res = await request(app).post('/api/articles')
         .field('title', 'test one title')
@@ -56,5 +68,24 @@ describe('Should post article', async() => {
 
         expect(res.status).to.be.equal(201);
     })
+
+
+    // delete an article
+    it('Should delete a post', async () => {
+        const article = await Article.create(testPosts);
+        await article.save();
+    
+        const res = await request(app).delete(`/api/articles/${article._id}`).set('Cookie',cookieValue);
+        expect(res.status).to.be.equal(200);
+      });
+
+
+      it('should update article')
+
+    //   it('should not get article', async () => {
+    //       const res = await request(app).get('/api/articles');
+
+    //       expect(res.status).to.be.equal(500);
+    //   })
 })
 
