@@ -23,7 +23,19 @@ const articleSchema = new Schema({
     image:{
         type: String,
         required: true
+    },
+
+    comments:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'Comment'
+    }],
+
+    commentsCount:{
+        type: Number,
+        default: 0
     }
+
+
     
 }, { timestamps: true });
 

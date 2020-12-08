@@ -111,13 +111,22 @@ router.delete('/queries/:id', function(req, res) {
 const getComments = require('../controllers/comments controller');
 // let comment = new Comment;
 
-router.post('/:id/comment', function(req, res) {
-    let comment = new Comment({
+router.post('/articles/:id/comment', async(req, res) => {
+    let comment = await new Comment({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         comment: req.body.comment
     });
-    comment.save().then(function(comment){
+    comment.save().then(async(comment) => {
+        const article = await Article.findById(req.params.id);
+        console.log(article);
+        if (article) {
+            article.comments.push(comment._id);
+            article.commentsCount += 1;
+           await article.save() 
+        } else {
+            res.status(404).send('article not found')
+        }
         res.status(201).send(comment + 'comment posted')
     }).catch((err) => {
         console.log(err.message);
@@ -126,28 +135,18 @@ router.post('/:id/comment', function(req, res) {
     
     
 });
-// comment.save().then(function(comment){
-//     res.send(comment + 'comment added')
-// }).catch((err) => {
-//     console.log(err.message);
-//     // res.status(422).send(err.message)
-// });
-router.get('/:id/comment', getComments);
-// router.delete('/:id/comment/:id', auth, deleteComment)
 
-// function postComment(req, res) {
-//     let comment = new Comment({
-//         _id: new mongoose.Types.ObjectId(),
-//         name: req.body.name,
-//         comment: req.body.comment
-//     })
-// };
+// getting comments
+router.get('/articles/:id/comment', async (req, res) => {
+    try {
+        let article = await Article.findById(req.params.id).populate('comments');
+        res.status(200).send(article.comments)
+    } catch (err) {
+        console.log(err);
+        res.status(404).send(err)
+    }
+});
 
-// function getComment(req, res) {
-//     Comment.find({}).then(function(comment) {
-//         res.send(comment)
-//     })
-// };
 
 module.exports = router;
 
