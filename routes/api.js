@@ -95,7 +95,7 @@ router.post('/queries', function(req, res) {
         message: req.body.message
     });
     query.save().then(function(query){
-        res.send(query + 'message sent')
+        res.status(201).send(query + 'message sent')
     }).catch((err) => {
         console.log(err.message);
         res.status(422).send(err.message)

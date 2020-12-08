@@ -40,5 +40,21 @@ describe('Should post article', async() => {
         const res = await request(app).get('/api/articles/'+article._id);
         expect(res.status).to.be.equal(200);
     } )
+
+    // IT SHOULD DELETE ARTICLE API 73-77
+
+    it('should get queries', async () => {
+        const res = await request(app).get('/api/queries');
+        expect(res.status).to.be.equal(200);
+    })
+
+    it('should add queries to the db', async () => {
+        const res = await request(app).post('/api/queries')
+        .field('name', 'partick')
+        .field('email', 'partick@gmail.com')
+        .field('message', 'Hey make sure this place is great')
+
+        expect(res.status).to.be.equal(201);
+    })
 })
 
