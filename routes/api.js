@@ -5,10 +5,6 @@ const multer = require('multer');
 const Article = require('../models/article');
 const upload = multer({dest: '../upload'});
 
-// Get a list of articles from the db
-router.get('/articles', function(req, res) {
-    res.send({type: 'GET'});
-});
 
 // add a new article to the db
 router.post('/articles', upload.single('image'), function(req, res) {
@@ -29,16 +25,10 @@ router.post('/articles', upload.single('image'), function(req, res) {
     
 });
 
-// update article in the db
-router.put('/articles/:id', function(req, res) {
-    res.send({type: 'PUT'});
+// Get a list of articles from the db
+router.get('/articles', function(req, res) {
+    res.send({type: 'GET'});
 });
 
-// delete article from the db
-router.delete('/articles/:id', function(req, res) {
-    Article.findByIdAndRemove({_id: req.params.id}).then(function(article) {
-        res.send(article);
-    });
-});
 
 module.exports = router;
