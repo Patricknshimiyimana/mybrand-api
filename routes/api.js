@@ -16,19 +16,14 @@ router.post('/articles', upload.single('image'), function(req, res) {
         image: req.file.path
     });
     article.save().then(function(article){
-        res.send(article)
+        res.status(201).send(article)
     }).catch((err) => {
-        console.log(err.message);
-        res.status(422).send(err.message)
+        res.status(500).send(err.message)
     });
     
     
 });
 
-// Get a list of articles from the db
-router.get('/articles', function(req, res) {
-    res.send({type: 'GET'});
-});
 
 
 module.exports = router;
