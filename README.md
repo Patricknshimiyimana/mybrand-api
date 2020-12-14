@@ -2,7 +2,7 @@
 
 mybrand-api is a nodejs rest api for dealing with my blog
 
-## Installation
+## Testing
 
 use git and clone the repo https://github.com/Patricknshimiyimana/mybrand-api
 and run it on local host 
