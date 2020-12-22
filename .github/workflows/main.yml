@@ -21,4 +21,9 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - run: $dbURI $dbURItest
+    env:
+      dbURI: mongodb+srv://patrick:rwanda@cluster0.4qk2g.mongodb.net/mybrand?retryWrites=true&w=majority
+      dbURItest: mongodb+srv://patrick:rwanda@cluster0.4qk2g.mongodb.net/mybrandtest?retryWrites=true&w=majority
+      
 
